@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.iframe-styles {
+  width: 60%;
+  margin-left: auto !important;
+  margin-right: auto;
+  height:  90vh;
+}
+
+.form {
+  #divPageMain\ container > app-accept-payment > div > div:nth-child(1) > div > order-summary-component {
+      display: none !important;
+  }
+}

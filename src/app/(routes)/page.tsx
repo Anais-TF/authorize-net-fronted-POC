@@ -1,39 +1,9 @@
 'use client';
 
 import Image from "next/image";
-import AxiosInstance from '@/utils/axios';
-import {useState, useRef, useEffect} from 'react';
 import {RiAddFill, RiDeleteBinFill, RiSubtractFill} from '@remixicon/react';
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState('');
-  const formRef = useRef(null);
-
-  const ExecuteGetForm = () => {
-    setLoading(true);
-    AxiosInstance.post('/v1/authorizenet/generate-form', {
-      amount: 45
-    })
-        .then((response) => {
-          console.log(">>>>>>>>>>>>", response.data);
-            setToken(response.data.data.token);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-  };
-
-  useEffect(() => {
-    if (token)
-    {
-        formRef?.current?.submit();
-    }
-  }, [token]);
-
   return (
       <main
           className="grid grid-cols-4 items-center min-h-screen font-[family-name:var(--font-geist-sans)]">
@@ -132,30 +102,17 @@ export default function Home() {
                           $45.00
                       </div>
 
-                      <button
-                          onClick={() => ExecuteGetForm()}
-                          disabled={loading}
-                          className="rounded-full bg-indigo-900 hover:bg-indigo-800 cursor-pointer transition-colors flex items-center justify-center text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full"
-                      >
+                    <a href="https://127.0.0.1:3000/payment">
+                        <button
+                            className="rounded-full bg-indigo-900 hover:bg-indigo-800 cursor-pointer transition-colors flex items-center justify-center text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full"
+                        >
 
-                          {
-                              loading ? (
-                                  <div
-                                      className="animate-spin inline-block size-6 border-4 border-current border-t-transparent text-white rounded-full"
-                                      role="status" aria-label="loading">
-                                      <span className="sr-only">Loading...</span>
-                                  </div>
-                              ) : <span>Checkout</span>
-                          }
-                      </button>
+                            Checkout
+                        </button>
+                    </a>
                   </div>
               </div>
           </section>
-
-          <form ref={formRef} className="hidden" method="post" action="https://test.authorize.net/payment/payment"
-                id="formAuthorizeNetTestPage" name="formAuthorizeNetTestPage">
-              <input type="hidden" name="token" value={token}/>
-          </form>
       </main>
   );
 }
